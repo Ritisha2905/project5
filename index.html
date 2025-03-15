@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Mood Tracker</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            transition: background 0.5s ease, color 0.5s ease;
+            background: linear-gradient(135deg, #f6d365, #fda085);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+        }
+        .current-mood {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        .mood-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .mood {
+            padding: 15px;
+            font-size: 24px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .mood:hover, .mood:active {
+            transform: scale(1.2);
+        }
+        .history {
+            margin-top: 30px;
+            font-size: 16px;
+            text-align: left;
+            max-height: 150px;
+            overflow-y: auto;
+            border-top: 2px solid #ccc;
+            padding-top: 10px;
+        }
+        .history p {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 5px 0;
+        }
+        .dark-mode {
+            background: linear-gradient(135deg, #232526, #414345);
+            color: white;
+        }
+        .dark-mode .container {
+            background: rgba(50, 50, 50, 0.9);
+        }
+        .toggle-dark-mode {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 20px;
+            background-color: #444;
+            color: white;
+            border: none;
+            display: inline-block;
+            width: 50px;
+            height: 25px;
+            position: relative;
+        }
+        .toggle-dark-mode:before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: white;
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+            border-radius: 50%;
+            transition: left 0.3s;
+        }
+        .dark-mode .toggle-dark-mode:before {
+            left: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>How are you feeling today?</h1>
+        <div class="current-mood" id="current-mood">Select your mood</div>
+        <button class="toggle-dark-mode" onclick="toggleDarkMode()"></button>
+        <div class="mood-container">
+            <button class="mood" onclick="setMood('Happy', 'linear-gradient(135deg, #ffeb3b, #ff9800)')">😊 Happy</button>
+            <button class="mood" onclick="setMood('Sad', 'linear-gradient(135deg, #2196f3, #0d47a1)')">😢 Sad</button>
+            <button class="mood" onclick="setMood('Excited', 'linear-gradient(135deg, #ff5722, #e91e63)')">🤩 Excited</button>
+            <button class="mood" onclick="setMood('Calm', 'linear-gradient(135deg, #00bcd4, #009688)')">😌 Calm</button>
+        </div>
+        <div class="history" id="history"></div>
+    </div>
+    <script>
+        function setMood(mood, color) {
+            document.body.style.background = color;
+            document.getElementById('current-mood').textContent = `Current Mood: ${mood}`;
+            
+            const history = document.getElementById('history');
+            const entry = document.createElement('p');
+            const timestamp = new Date().toLocaleTimeString();
+            entry.textContent = `${timestamp} - ${mood}`;
+            history.prepend(entry);
+        }
+        
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
